@@ -1,19 +1,22 @@
-package com.vk.ecommerce.models;
+package com.vk.ecommerce.dtos;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
-public class Product {
+public class FakeStoreProductDTO {
 	
 	private Long id;
+	
 	private String title;
+	
 	private double price;
+	
 	private String description;
+	
+	private String category;
+	
 	private String image;
-	private Category category;
 
 }
