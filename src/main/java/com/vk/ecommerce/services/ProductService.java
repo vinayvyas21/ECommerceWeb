@@ -2,6 +2,7 @@ package com.vk.ecommerce.services;
 
 import java.util.List;
 
+import com.vk.ecommerce.dtos.ProductRequestDTO;
 import com.vk.ecommerce.models.Product;
 
 public interface ProductService {
@@ -10,9 +11,9 @@ public interface ProductService {
 	
 	public List<Product> getAllProducts();
 	
-	public Product replaceProduct(Product product);
+	public Product replaceProduct(Long id, ProductRequestDTO productRequestDTO);
 	
-	public Product updateProduct(Product product);
+	public Product updateProduct(Long id, ProductRequestDTO productRequestDTO);
 	
-	public void deleteProduct();
+	public void deleteProduct(Long id);
 }
