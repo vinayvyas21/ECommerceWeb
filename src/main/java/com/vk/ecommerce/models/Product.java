@@ -1,5 +1,8 @@
 package com.vk.ecommerce.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,13 +10,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Product {
+@Entity
+public class Product extends BaseModel{
 	
-	private Long id;
 	private String title;
 	private double price;
 	private String description;
 	private String image;
+	@ManyToOne
 	private Category category;
 
 }
