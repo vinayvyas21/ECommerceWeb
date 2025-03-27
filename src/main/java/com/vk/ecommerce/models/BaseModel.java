@@ -13,7 +13,6 @@ import lombok.Setter;
 public abstract class BaseModel {
 	@Id
 	private Long id;
-	
 	private Date createdAt;
 	private Date updatedAt;
 
