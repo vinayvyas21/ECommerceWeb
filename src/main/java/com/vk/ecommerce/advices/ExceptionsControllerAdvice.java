@@ -9,7 +9,7 @@ import com.vk.ecommerce.dtos.ExceptionDTO;
 
 @RestControllerAdvice
 public class ExceptionsControllerAdvice {
-	
+
 	@ExceptionHandler(ArithmeticException.class)
 	public ResponseEntity<ExceptionDTO> handleArithmaticException(ArithmeticException ex) {
 		ExceptionDTO dto = new ExceptionDTO();

@@ -14,7 +14,7 @@ import com.vk.ecommerce.dtos.ProductRequestDTO;
 import com.vk.ecommerce.models.Product;
 import com.vk.ecommerce.services.ProductService;
 
-@Service
+@Service("fakeStoreProductService")
 public class FakeStoreProductServiceImpl implements ProductService {
 
 	private RestTemplate restTemplate;
@@ -59,6 +59,12 @@ public class FakeStoreProductServiceImpl implements ProductService {
 	@Override
 	public void deleteProduct(Long id) {
 		restTemplate.delete("https://fakestoreapi.com/products/"+ id);
+	}
+
+	@Override
+	public Product createProduct(Product product) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

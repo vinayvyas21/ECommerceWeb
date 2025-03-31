@@ -2,6 +2,7 @@ package com.vk.ecommerce.controllers;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,37 +24,40 @@ import com.vk.ecommerce.services.ProductService;
 public class ProductController {
 
 	private ProductService productService;
-	
-	ProductController(ProductService productService) {
+
+	ProductController(@Qualifier("selfProductService") ProductService productService) {
 		this.productService = productService;
 	}
+
 	@GetMapping("/{id}")
 	public Product getProductById(@PathVariable("id") Long id) {
 		return this.productService.getProductById(id);
 	}
-	
+
 	@GetMapping
 	public List<Product> getAllProducts() {
 		return productService.getAllProducts();
 	}
-	
+
 	@PostMapping
 	public Product createProduct(@RequestBody Product product) {
-		return new Product();
+		return productService.createProduct(product);
 	}
-	
+
 	@PutMapping("/{id}")
-	public ResponseEntity<Product> replaceProduct(@PathVariable("id") Long id, @RequestBody ProductRequestDTO productRequestDTO) {
+	public ResponseEntity<Product> replaceProduct(@PathVariable("id") Long id,
+			@RequestBody ProductRequestDTO productRequestDTO) {
 		Product product = productService.replaceProduct(id, productRequestDTO);
 		return new ResponseEntity<>(product, HttpStatus.OK);
 	}
-	
+
 	@PatchMapping("/{id}")
-	public ResponseEntity<Product> updateProduct(@PathVariable("id") Long id, @RequestBody ProductRequestDTO productRequestDTO) {
+	public ResponseEntity<Product> updateProduct(@PathVariable("id") Long id,
+			@RequestBody ProductRequestDTO productRequestDTO) {
 		Product product = productService.updateProduct(id, productRequestDTO);
 		return new ResponseEntity<>(product, HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("{id}")
 	public void updateProduct(@PathVariable("id") long id) {
 		productService.deleteProduct(id);
