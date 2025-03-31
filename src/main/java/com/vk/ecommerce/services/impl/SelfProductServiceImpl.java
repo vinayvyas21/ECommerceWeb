@@ -20,10 +20,10 @@ import com.vk.ecommerce.services.ProductService;
  */
 @Service("selfProductService")
 public class SelfProductServiceImpl implements ProductService {
-	
+
 	private ProductRepository productRepository;
 	private CategoryRepository categoryRepository;
-	
+
 	public SelfProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository) {
 		this.productRepository = productRepository;
 		this.categoryRepository = categoryRepository;
@@ -43,25 +43,51 @@ public class SelfProductServiceImpl implements ProductService {
 
 	@Override
 	public Product replaceProduct(Long id, ProductRequestDTO productRequestDTO) {
-		// TODO Auto-generated method stub
+		Optional<Product> productOptional = productRepository.findById(id);
+		Product product = productOptional.get();
+		if (product != null) {
+			product.setTitle(productRequestDTO.getTitle());
+			product.setDescription(productRequestDTO.getDescription());
+			product.setPrice(productRequestDTO.getPrice());
+			product.setImage(productRequestDTO.getImage());
+			
+			return productRepository.save(product);
+		}
+
 		return null;
 	}
 
 	@Override
 	public Product updateProduct(Long id, ProductRequestDTO productRequestDTO) {
-		// TODO Auto-generated method stub
+		Optional<Product> productOptional = productRepository.findById(id);
+		Product product  = productOptional.get();
+		if (product != null) {
+			if (productRequestDTO.getTitle() != null) {
+				product.setTitle(productRequestDTO.getTitle());
+			} 
+			if (productRequestDTO.getDescription() != null) {
+				product.setDescription(productRequestDTO.getDescription());
+			} 
+			if (productRequestDTO.getPrice() != null) {
+				product.setPrice(productRequestDTO.getPrice());
+			} 
+			if (productRequestDTO.getImage() != null) {
+				product.setImage(productRequestDTO.getImage());
+			}
+			return productRepository.save(product);
+		}
 		return null;
 	}
 
 	@Override
 	public void deleteProduct(Long id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public Product createProduct(Product product) {
-		if(product.getCategory() != null && product.getCategory().getId() == null) {
+		if (product.getCategory() != null && product.getCategory().getId() == null) {
 			Category category = categoryRepository.save(product.getCategory());
 			product.setCategory(category);
 		}

@@ -1,7 +1,13 @@
 package com.vk.ecommerce.models;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,11 +18,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @MappedSuperclass
+@EntityListeners(AuditingEntityListener.class) 
 public class BaseModel {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Date createdAt;
-	private Date updatedAt;
+	
+	@CreatedDate
+	@Column (updatable = false)
+	private LocalDateTime createdAt;
+	
+	@LastModifiedDate
+	private LocalDateTime updatedAt;
 
 }
