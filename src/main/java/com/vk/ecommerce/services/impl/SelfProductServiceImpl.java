@@ -37,8 +37,7 @@ public class SelfProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Product> getAllProducts() {
-		// TODO Auto-generated method stub
-		return null;
+		return productRepository.findAll();
 	}
 
 	@Override
@@ -50,7 +49,7 @@ public class SelfProductServiceImpl implements ProductService {
 			product.setDescription(productRequestDTO.getDescription());
 			product.setPrice(productRequestDTO.getPrice());
 			product.setImage(productRequestDTO.getImage());
-			
+
 			return productRepository.save(product);
 		}
 
@@ -60,17 +59,17 @@ public class SelfProductServiceImpl implements ProductService {
 	@Override
 	public Product updateProduct(Long id, ProductRequestDTO productRequestDTO) {
 		Optional<Product> productOptional = productRepository.findById(id);
-		Product product  = productOptional.get();
+		Product product = productOptional.get();
 		if (product != null) {
 			if (productRequestDTO.getTitle() != null) {
 				product.setTitle(productRequestDTO.getTitle());
-			} 
+			}
 			if (productRequestDTO.getDescription() != null) {
 				product.setDescription(productRequestDTO.getDescription());
-			} 
+			}
 			if (productRequestDTO.getPrice() != null) {
 				product.setPrice(productRequestDTO.getPrice());
-			} 
+			}
 			if (productRequestDTO.getImage() != null) {
 				product.setImage(productRequestDTO.getImage());
 			}
@@ -81,8 +80,10 @@ public class SelfProductServiceImpl implements ProductService {
 
 	@Override
 	public void deleteProduct(Long id) {
-		// TODO Auto-generated method stub
-
+		Optional<Product> product = productRepository.findById(id);
+		if (product.isPresent()) {
+			productRepository.delete(product.get());
+		}
 	}
 
 	@Override
