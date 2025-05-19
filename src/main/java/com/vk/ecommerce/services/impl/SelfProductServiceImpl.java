@@ -48,7 +48,7 @@ public class SelfProductServiceImpl implements ProductService {
 			product.setTitle(productRequestDTO.getTitle());
 			product.setDescription(productRequestDTO.getDescription());
 			product.setPrice(productRequestDTO.getPrice());
-			product.setImage(productRequestDTO.getImage());
+			product.setImageUrl(productRequestDTO.getImage());
 
 			return productRepository.save(product);
 		}
@@ -71,7 +71,7 @@ public class SelfProductServiceImpl implements ProductService {
 				product.setPrice(productRequestDTO.getPrice());
 			}
 			if (productRequestDTO.getImage() != null) {
-				product.setImage(productRequestDTO.getImage());
+				product.setImageUrl(productRequestDTO.getImage());
 			}
 			return productRepository.save(product);
 		}

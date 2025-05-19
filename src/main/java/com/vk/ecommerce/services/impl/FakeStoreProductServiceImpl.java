@@ -13,7 +13,12 @@ import com.vk.ecommerce.dtos.FakeStoreProductDTO;
 import com.vk.ecommerce.dtos.ProductRequestDTO;
 import com.vk.ecommerce.models.Product;
 import com.vk.ecommerce.services.ProductService;
-
+/**	
+ * Fake Store Product Service Implementation
+ * 
+ * @author vk
+ *
+ */
 @Service("fakeStoreProductService")
 public class FakeStoreProductServiceImpl implements ProductService {
 

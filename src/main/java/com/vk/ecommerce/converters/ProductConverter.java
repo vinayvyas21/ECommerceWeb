@@ -7,6 +7,10 @@ import com.vk.ecommerce.dtos.FakeStoreProductDTO;
 import com.vk.ecommerce.models.Category;
 import com.vk.ecommerce.models.Product;
 
+/**
+ * This class is responsible for converting FakeStoreProductDTO objects to Product objects.
+ * It contains methods to convert a single FakeStoreProductDTO to a Product and to convert an array of FakeStoreProductDTOs to a list of Products.
+ */
 public class ProductConverter {
 
 	public static Product convertFakeStoreProductDTOToProduct(FakeStoreProductDTO fakeStoreProductDTO) {
@@ -16,11 +20,11 @@ public class ProductConverter {
 		product.setId(fakeStoreProductDTO.getId());
 		product.setTitle(fakeStoreProductDTO.getTitle());
 //		product.setPrice(fakeStoreProductDTO.getPrice());
-		product.setImage(fakeStoreProductDTO.getImage());
+		product.setImageUrl(fakeStoreProductDTO.getImage());
 		product.setDescription(fakeStoreProductDTO.getDescription());
 
 		Category category = new Category();
-		category.setTitle(fakeStoreProductDTO.getCategory());
+		category.setName(fakeStoreProductDTO.getCategory());
 
 		product.setCategory(category);
 		return product;

@@ -19,6 +19,9 @@ import com.vk.ecommerce.dtos.ProductRequestDTO;
 import com.vk.ecommerce.models.Product;
 import com.vk.ecommerce.services.ProductService;
 
+/**
+ * Product Controller
+ */
 @RestController
 @RequestMapping("/products")
 public class ProductController {
@@ -29,21 +32,45 @@ public class ProductController {
 		this.productService = productService;
 	}
 
+	/**
+	 * Get product by id
+	 * 
+	 * @param id
+	 * @return Product
+	 */
 	@GetMapping("/{id}")
 	public Product getProductById(@PathVariable("id") Long id) {
 		return this.productService.getProductById(id);
 	}
 
+	/**
+	 * Get all products
+	 * 
+	 * @return List<Product>
+	 */
 	@GetMapping
 	public List<Product> getAllProducts() {
 		return productService.getAllProducts();
 	}
 
+	/**
+	 * Create a new product
+	 * 
+	 * @param product
+	 * @return Product
+	 */
 	@PostMapping
 	public Product createProduct(@RequestBody Product product) {
 		return productService.createProduct(product);
 	}
 
+	/**
+	 * Replace a product
+	 * 
+	 * @param id
+	 * @param productRequestDTO
+	 * @return Product
+	 */
 	@PutMapping("/{id}")
 	public ResponseEntity<Product> replaceProduct(@PathVariable("id") Long id,
 			@RequestBody ProductRequestDTO productRequestDTO) {
@@ -51,6 +78,13 @@ public class ProductController {
 		return new ResponseEntity<>(product, HttpStatus.OK);
 	}
 
+	/**
+	 * Update a product
+	 * 
+	 * @param id
+	 * @param productRequestDTO
+	 * @return Product
+	 */
 	@PatchMapping("/{id}")
 	public ResponseEntity<Product> updateProduct(@PathVariable("id") Long id,
 			@RequestBody ProductRequestDTO productRequestDTO) {
@@ -58,6 +92,11 @@ public class ProductController {
 		return new ResponseEntity<>(product, HttpStatus.OK);
 	}
 
+	/**
+	 * Delete a product
+	 * 
+	 * @param id
+	 */
 	@DeleteMapping("{id}")
 	public void updateProduct(@PathVariable("id") long id) {
 		productService.deleteProduct(id);
