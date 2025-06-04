@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
 import com.vk.ecommerce.dtos.search.FilterDto;
 import com.vk.ecommerce.dtos.search.SortingCriteria;
@@ -20,6 +21,7 @@ import com.vk.ecommerce.services.sortingService.SorterFactory;
 /**
  * Search Service Implementation
  */
+@Service
 public class SearchServiceImpl implements SearchService {
 
 	private ProductRepository productRepository;
