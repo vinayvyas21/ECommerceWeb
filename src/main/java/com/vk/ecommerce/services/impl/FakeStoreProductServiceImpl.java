@@ -2,6 +2,7 @@ package com.vk.ecommerce.services.impl;
 
 import java.util.List;
 
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpMessageConverterExtractor;
@@ -13,7 +14,8 @@ import com.vk.ecommerce.dtos.FakeStoreProductDTO;
 import com.vk.ecommerce.dtos.ProductRequestDTO;
 import com.vk.ecommerce.models.Product;
 import com.vk.ecommerce.services.ProductService;
-/**	
+
+/**
  * Fake Store Product Service Implementation
  * 
  * @author vk
@@ -23,21 +25,31 @@ import com.vk.ecommerce.services.ProductService;
 public class FakeStoreProductServiceImpl implements ProductService {
 
 	private RestTemplate restTemplate;
+	private RedisTemplate<String, Object> redisTemplate;
 
-	public FakeStoreProductServiceImpl(RestTemplate restTemplate) {
+	public FakeStoreProductServiceImpl(RestTemplate restTemplate, RedisTemplate<String, Object> redisTemplate) {
 		this.restTemplate = restTemplate;
+		this.redisTemplate = redisTemplate;
 	}
 
 	@Override
 	public Product getProductById(Long id) {
+		Product product = (Product) this.redisTemplate.opsForHash().get("PRODUCTS", "PRODUCT_" + id);
+		if (product != null) {
+			return product;
+		}
 		FakeStoreProductDTO fakeStoreProductDTO = restTemplate.getForObject("https://fakestoreapi.com/products/" + id,
 				FakeStoreProductDTO.class);
-		return ProductConverter.convertFakeStoreProductDTOToProduct(fakeStoreProductDTO);
+		product = ProductConverter.convertFakeStoreProductDTOToProduct(fakeStoreProductDTO);
+		this.redisTemplate.opsForHash().put("PRODUCTS", "PRODUCT_" + id, product);
+		return product;
+//		return ProductConverter.convertFakeStoreProductDTOToProduct(fakeStoreProductDTO);
 	}
 
 	@Override
 	public List<Product> getAllProducts() {
-		FakeStoreProductDTO[] fakeStoreProductDTOList =restTemplate.getForObject("https://fakestoreapi.com/products", FakeStoreProductDTO[].class);
+		FakeStoreProductDTO[] fakeStoreProductDTOList = restTemplate.getForObject("https://fakestoreapi.com/products",
+				FakeStoreProductDTO[].class);
 		return ProductConverter.convertFakeStoreProductsListToProductList(fakeStoreProductDTOList);
 	}
 
@@ -63,7 +75,7 @@ public class FakeStoreProductServiceImpl implements ProductService {
 
 	@Override
 	public void deleteProduct(Long id) {
-		restTemplate.delete("https://fakestoreapi.com/products/"+ id);
+		restTemplate.delete("https://fakestoreapi.com/products/" + id);
 	}
 
 	@Override
