@@ -35,6 +35,9 @@ public class SearchServiceImpl implements SearchService {
 			int pageSize) {
 		List<Product> products = productRepository.findByTitleContaining(query);
 
+		if (products.isEmpty()) {
+			return new PageImpl<>(new ArrayList<>(), PageRequest.of(pageNumber, pageSize), 0);
+		}
 		for (FilterDto filterDto : filters) {
 			products = FilterFactory.getFilterFromKey(filterDto.getKey()).apply(products, filterDto.getValues());
 		}
