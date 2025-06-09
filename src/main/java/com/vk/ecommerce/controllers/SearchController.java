@@ -33,13 +33,14 @@ public class SearchController {
 	}
 
 	/**
-	 * Searches for products based on the search term, filters, and sorting criteria.
+	 * Searches for products based on the search term, filters, and sorting
+	 * criteria.
 	 *
-	 * @param query            The term to search for.
-	 * @param filters          The list of filters to apply.
-	 * @param sortingCriteria  The criteria for sorting the results.
-	 * @param pageNumber       The page number to retrieve.
-	 * @param pageSize         The number of items per page.
+	 * @param query           The term to search for.
+	 * @param filters         The list of filters to apply.
+	 * @param sortingCriteria The criteria for sorting the results.
+	 * @param pageNumber      The page number to retrieve.
+	 * @param pageSize        The number of items per page.
 	 * @return A SearchResponseDTO containing the search results.
 	 */
 	@GetMapping("/")

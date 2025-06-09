@@ -5,11 +5,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
-import com.vk.ecommerce.converters.ProductConverter;
-
+/**
+ * Configuration class for RestTemplate.
+ * This class provides a RestTemplate bean that can be used to make HTTP requests.
+ */
 @Configuration
 public class RestTemplateConfig {
-	
+
 	@Bean
 	public RestTemplate getRestTemplate() {
 		return new RestTemplateBuilder().build();
