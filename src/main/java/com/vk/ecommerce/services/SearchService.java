@@ -19,5 +19,16 @@ public interface SearchService {
 	 * @return A SearchResponseDTO containing the search results.
 	 */
 	public Page<Product> search(String searchTerm, List<FilterDto> filters, SortingCriteria sortingCriteria, int pageNumber, int pageSize);
+	
+	/**
+	 * Performs a simple search for products based on a query string and category ID.
+	 * @param query
+	 * @param categoryId
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param sortingCriteria
+	 * @return
+	 */
+	public Page<Product> simpleSearch(String query, Long categoryId,  int pageNumber, int pageSize, SortingCriteria sortingCriteria);
 
 }

@@ -77,8 +77,21 @@ public class SearchController {
 	@GetMapping("/byCategory")
 	public SearchResponseDto simpleSearch(@RequestParam("query") String query,
 			@RequestParam("category") Long categoryId, @RequestParam("pageNumber") int pageNumber,
-			@RequestParam("pageSize") int pageSize, @RequestParam("sortingAttribute") String sortingAttribute) {
-		return null;
+			@RequestParam("pageSize") int pageSize, @RequestParam("sortBy") SortingCriteria sortingCriteria) {
+		SearchResponseDto response = new SearchResponseDto();
+		Page<Product> productsPage = searchService.simpleSearch(query, categoryId, pageNumber, pageSize,
+				sortingCriteria);
+		List<GetProductDto> getProductDtos = productsPage.getContent().stream().map(GetProductDto::from)
+				.collect(Collectors.toList());
+
+		Pageable pageable = PageRequest.of(productsPage.getNumber(), productsPage.getSize(), productsPage.getSort());
+		Page<GetProductDto> getProductDtoPage = new PageImpl<>(getProductDtos, pageable,
+				productsPage.getTotalElements());
+
+		response.setProductsPage(getProductDtoPage);
+
+		return response;
+		
 	}
 
 }

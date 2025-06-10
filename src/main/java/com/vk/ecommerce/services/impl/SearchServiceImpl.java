@@ -67,4 +67,10 @@ public class SearchServiceImpl implements SearchService {
 		return products;
 	}
 
+	@Override
+	public Page<Product> simpleSearch(String query, Long categoryId, int pageNumber, int pageSize,
+			SortingCriteria sortingCriteria) {
+		return simpleSearch(query, categoryId, pageNumber, pageSize, sortingCriteria);
+	}
+
 }
