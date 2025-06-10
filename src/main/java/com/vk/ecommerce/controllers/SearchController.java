@@ -65,14 +65,13 @@ public class SearchController {
 	}
 
 	/**
-	 * Searches for products based on the search term and category.
-	 *
-	 * @param query            The term to search for.
-	 * @param categoryId       The ID of the category to filter by.
-	 * @param pageNumber       The page number to retrieve.
-	 * @param pageSize         The number of items per page.
-	 * @param sortingAttribute The attribute to sort the results by.
-	 * @return A SearchResponseDTO containing the search results.
+	 * Performs a simple search for products based on a query string and category ID.
+	 * @param query
+	 * @param categoryId
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param sortingCriteria
+	 * @return
 	 */
 	@GetMapping("/byCategory")
 	public SearchResponseDto simpleSearch(@RequestParam("query") String query,
@@ -91,7 +90,7 @@ public class SearchController {
 		response.setProductsPage(getProductDtoPage);
 
 		return response;
-		
+
 	}
 
 }
