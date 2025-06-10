@@ -6,6 +6,7 @@ package com.vk.ecommerce.services.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import com.vk.ecommerce.dtos.ProductRequestDTO;
@@ -23,15 +24,25 @@ public class SelfProductServiceImpl implements ProductService {
 
 	private ProductRepository productRepository;
 	private CategoryRepository categoryRepository;
+	private RedisTemplate<String, Object> redisTemplate;
 
-	public SelfProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository) {
+	public SelfProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository, RedisTemplate<String, Object> redisTemplate) {
 		this.productRepository = productRepository;
 		this.categoryRepository = categoryRepository;
+		this.redisTemplate = redisTemplate;
 	}
 
 	@Override
 	public Product getProductById(Long id) {
+		Product product = (Product) this.redisTemplate.opsForHash().get("PRODUCTS", "PRODUCT_" + id);
+		if (product != null) {
+			return product;
+		}
+		// Fetch product from the database if not found in Redis
 		Optional<Product> productOptional = productRepository.findById(id);
+
+		this.redisTemplate.opsForHash().put("PRODUCTS", "PRODUCT_" + id, productOptional.get());
+
 		return productOptional.isPresent() ? productOptional.get() : null;
 	}
 
